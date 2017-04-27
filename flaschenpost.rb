@@ -14,10 +14,10 @@ post '/' do
   when 'INTENT_REQUEST'
     case intent_request.intent.fetch('name')
     when 'ExpressOrder'
-     session.login_user
-     session.put_beer_in_cart
-     session.put_beer_in_cart
-     session.order_cart
+    #  session.login_user
+    #  session.put_beer_in_cart
+    #  session.put_beer_in_cart
+    #  session.order_cart
 
      intent_response.add_speech("Deine Getränke sind auf dem Weg")
     when 'AddLineItem'
