@@ -1,20 +1,26 @@
 require 'sinatra'
 require 'json'
 require 'alexa_rubykit'
-
+require './flaschenpost_ghost.rb'
 
 post '/' do
   json_params = JSON.parse(request.body.read)
-
   intent_request = AlexaRubykit::build_request(json_params)
 
+  session = FlaschenpostGhost::FlaschenpostSession.new
 
   intent_response = AlexaRubykit::Response.new
   case intent_request.type
   when 'INTENT_REQUEST'
     case intent_request.intent.fetch('name')
     when 'ExpressOrder'
-      intent_response.add_speech("Du möchtest eine Bestellung aufgeben")
+
+     session.login_user
+     session.put_beer_in_cart
+     session.put_beer_in_cart
+     session.order_cart
+
+     intent_response.add_speech("Deine Getränke sind auf dem Weg")
     else
       intent_response.add_speech("Mit dieser Anfrage kann ich leider nichts anfangen")
     end
@@ -26,7 +32,5 @@ post '/' do
 
   content_type :json
 
-  # intent_response = AlexaRubykit::Response.new
-  # response.add_speech("Du möchtest eine Bestellung aufgeben")
   intent_response.build_response
 end
