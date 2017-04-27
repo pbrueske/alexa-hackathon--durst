@@ -8,6 +8,8 @@ post '/' do
 
   intent_request = AlexaRubykit::build_request(json_params)
 
+
+  intent_response = AlexaRubykit::Response.new
   case intent_request.type
   when 'INTENT_REQUEST'
     case intent_request.intent.fetch('name')
@@ -24,7 +26,7 @@ post '/' do
 
   content_type :json
 
-  response = AlexaRubykit::Response.new
-  response.add_speech("Du möchtest eine Bestellung aufgeben")
-  response.build_response
+  # intent_response = AlexaRubykit::Response.new
+  # response.add_speech("Du möchtest eine Bestellung aufgeben")
+  intent_response.build_response
 end
