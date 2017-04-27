@@ -1,3 +1,6 @@
+require 'capybara'
+require 'capybara/poltergeist'
+
 module FlaschenpostGhost
   class FlaschenpostSession
     DRINK_TYPES = [
@@ -17,8 +20,8 @@ module FlaschenpostGhost
 
     def login_user
       @session.find(".login").trigger('click')
-      @session.fill_in 'inpLoginEmail', with: ENV['FLASCHENPOST_USER']
-      @session.fill_in 'inpLoginPass', with: ENV['FLASCHENPOST_PASSWORD']
+      @session.fill_in 'inpLoginEmail', with: "felix.seidel@zweitag.de"
+      @session.fill_in 'inpLoginPass', with: "a4RygH4j"
       @session.find('#btnLogin').trigger('click')
       @session.visit "#{@base_path}meinegetraenke"
       @session.has_content? "Meine Getränke"
@@ -38,7 +41,7 @@ module FlaschenpostGhost
     end
   end
 
-  def example_walk_through
+  def self.example_walk_through
     session = FlaschenpostSession.new
     session.login_user
     session.put_beer_in_cart
@@ -47,3 +50,6 @@ module FlaschenpostGhost
   end
 end
 
+if __FILE__ == $0
+  FlaschenpostGhost::example_walk_through
+end
