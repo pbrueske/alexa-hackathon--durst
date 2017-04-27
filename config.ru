@@ -1,2 +1,2 @@
-require './chuck'
+require './flaschenpost'
 run Sinatra::Application
