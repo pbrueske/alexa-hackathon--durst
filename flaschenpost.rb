@@ -17,10 +17,15 @@ post '/' do
      intent_response.add_speech("Deine Getränke sind auf dem Weg")
 
      Thread.new do
+       puts "Begin order"
        session.login_user
+       puts "1"
        session.put_beer_in_cart
+       puts "2"
        session.put_beer_in_cart
+       puts "3"
        session.order_cart
+       puts "Finish order"
      end
     when 'AddLineItem'
       beverage = intent_request.intent.fetch('slots').fetch('beverage')
